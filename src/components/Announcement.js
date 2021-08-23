@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -20,10 +21,10 @@ export default class Announcement extends React.Component {
             const anncmntKey = 'hide-announcement-bar';
             const anncmntCurrentValue = anncmntElm.dataset.anncmntId;
             if (hasLocalStorage) {
-                if (localStorage.getItem(anncmntKey) != anncmntCurrentValue ) {
+                if (localStorage.getItem(anncmntKey) != anncmntCurrentValue) {
                     this.setState({
                         isHidden: false
-                    })
+                    });
                 }
             }
         }
@@ -36,7 +37,7 @@ export default class Announcement extends React.Component {
 
         this.setState({
             isHidden: true
-        })
+        });
 
         if (hasLocalStorage) {
             localStorage.setItem(anncmntKey, anncmntCurrentValue);
@@ -57,9 +58,9 @@ export default class Announcement extends React.Component {
                     'js-announcement': anncmntHasClose,
                     'is-hidden': anncmntHasClose && isHidden
                 })}
-                {...(anncmntHasClose ? ({ "data-anncmnt-id": anncmntId }) : null)}
+                {...(anncmntHasClose ? { 'data-anncmnt-id': anncmntId } : null)}
                 ref={this.anncmntRef}
-                data-sb-field-path={this.props.annotationPrefix}
+                {...fpath(this.props.annotationPrefix)}
             >
                 <div className="container">
                     <div className="announcement-bar__content">
@@ -68,7 +69,7 @@ export default class Announcement extends React.Component {
                                 'text-center': anncmntAlignX === 'center',
                                 'text-right': anncmntAlignX === 'right'
                             })}
-                            data-sb-field-path=".anncmnt_content"
+                            {...fpath('.anncmnt_content')}
                         >
                             {markdownify(anncmntContent)}
                         </div>
@@ -77,7 +78,7 @@ export default class Announcement extends React.Component {
                                 aria-label="Close"
                                 className="btn btn--icon btn--clear js-announcment-close"
                                 onClick={this.handleAnncmntClose.bind(this)}
-                                data-sb-field-path=".anncmnt_has_close"
+                                {...fpath('.anncmnt_has_close')}
                             >
                                 <Icon icon={'close'} />
                                 <span className="sr-only">Close</span>
@@ -95,17 +96,11 @@ export default class Announcement extends React.Component {
         const anncmnt = _.get(this.props, 'anncmnt');
         const anncmntHomeOnly = _.get(anncmnt, 'anncmnt_is_home_only');
 
-        return (
-            anncmntHomeOnly ? (
-                (pageUrl === '/') && this.renderAnncmnt(anncmnt)
-            ) : (
-                this.renderAnncmnt(anncmnt)
-            )
-        );
+        return anncmntHomeOnly ? pageUrl === '/' && this.renderAnncmnt(anncmnt) : this.renderAnncmnt(anncmnt);
     }
 }
 
-const hasLocalStorage = (function() {
+const hasLocalStorage = (function () {
     try {
         localStorage.setItem('__test', true);
         localStorage.removeItem('__test');
@@ -113,4 +108,4 @@ const hasLocalStorage = (function() {
     } catch (exception) {
         return false;
     }
-}());
+})();

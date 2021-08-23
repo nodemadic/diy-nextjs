@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -23,16 +24,16 @@ export default class FormField extends React.Component {
             case 'checkbox':
                 return (
                     <div className="form-checkbox">
-                        <input type="checkbox" id={name} name={name} {...attr} data-sb-field-path=".name#@name .default_value#@value" />
-                        {label && <label htmlFor={name} id={labelId} data-sb-field-path=".label">{label}</label>}
+                        <input type="checkbox" id={name} name={name} {...attr} {...fpath('.name#@name .default_value#@value')} />
+                        {label && <label htmlFor={name} id={labelId} {...fpath('.label')}>{label}</label>}
                     </div>
                 );
             case 'select':
                 return (
                     <React.Fragment>
-                        {label && <label htmlFor={name} id={labelId} data-sb-field-path=".label">{label}</label>}
+                        {label && <label htmlFor={name} id={labelId} {...fpath('.label')}>{label}</label>}
                         <div className="form-select">
-                            <select id={name} name={name} {...attr} data-sb-field-path=".name#@name .default_value#@value .options">
+                            <select id={name} name={name} {...attr} {...fpath('.name#@name .default_value#@value .options')}>
                                 {defaultValue && <option value="">{defaultValue}</option>}
                                 {_.map(options, (option, index) => (
                                     <option key={index} value={option}>{option}</option>
@@ -44,15 +45,15 @@ export default class FormField extends React.Component {
             case 'textarea':
                 return (
                     <React.Fragment>
-                        {label && <label htmlFor={name} id={labelId} data-sb-field-path=".label">{label}</label>}
-                        <textarea name={name} id={name} rows="5" {...(defaultValue ? { placeholder: defaultValue } : null)} {...attr} data-sb-field-path=".name#@name .default_value#@placeholder"/>
+                        {label && <label htmlFor={name} id={labelId} {...fpath('.label')}>{label}</label>}
+                        <textarea name={name} id={name} rows="5" {...(defaultValue ? { placeholder: defaultValue } : null)} {...attr} {...fpath('.name#@name .default_value#@placeholder')}/>
                     </React.Fragment>
                 );
             default:
                 return (
                     <React.Fragment>
-                        {label && <label htmlFor={name} id={labelId} data-sb-field-path=".label">{label}</label>}
-                        <input type={inputType} name={name} id={name} {...(defaultValue ? { placeholder: defaultValue } : null)} {...attr} data-sb-field-path=".name#@name .default_value#@placeholder"/>
+                        {label && <label htmlFor={name} id={labelId} {...fpath('.label')}>{label}</label>}
+                        <input type={inputType} name={name} id={name} {...(defaultValue ? { placeholder: defaultValue } : null)} {...attr} {...fpath('.name#@name .default_value#@placeholder')}/>
                         <span className="animate-border" aria-hidden="true" />
                     </React.Fragment>
                 );

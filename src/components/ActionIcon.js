@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -27,13 +28,13 @@ export default class ActionIcon extends React.Component {
             attrs.target = '_blank';
         }
         if (newWindow || noFollow) {
-            attrs.rel = [(newWindow ? 'noopener' : ''), (noFollow ? 'nofollow' : '')].filter(Boolean).join(' ');
+            attrs.rel = [newWindow ? 'noopener' : '', noFollow ? 'nofollow' : ''].filter(Boolean).join(' ');
         }
 
         const annotationPrefix = _.get(this.props, 'annotationPrefix', '');
 
         return (
-            <Link href={withPrefix(url)} {...attrs} className={classes} data-sb-field-path={`${annotationPrefix}.label#span[1] ${annotationPrefix}.icon#svg[1]`}>
+            <Link href={withPrefix(url)} {...attrs} className={classes} {...fpath(`${annotationPrefix}.label#span[1] ${annotationPrefix}.icon#svg[1]`)}>
                 <Icon icon={icon} />
                 <span className="sr-only">{label}</span>
             </Link>

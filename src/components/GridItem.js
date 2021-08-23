@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -15,9 +16,9 @@ export default class GridItem extends React.Component {
         const subtitle = _.get(item, 'subtitle');
         const titleAlignX = _.get(item, 'title_align', 'left');
         const titleClasses = classNames('item__title', {
-            'h3': sectionColumns === 'two',
-            'h4': sectionColumns === 'three',
-            'h5': sectionColumns === 'four',
+            h3: sectionColumns === 'two',
+            h4: sectionColumns === 'three',
+            h5: sectionColumns === 'four',
             'text-center': titleAlignX === 'center',
             'text-right': titleAlignX === 'right'
         });
@@ -45,11 +46,11 @@ export default class GridItem extends React.Component {
                     'my-2': gridGapY !== 'small',
                     'my-sm-3': gridGapY === 'large'
                 })}
-                data-sb-field-path={`.${this.props.index}`}
+                {...fpath(`.${this.props.index}`)}
             >
                 <div
                     className={classNames('item', {
-                        'card': isCard,
+                        card: isCard,
                         'card--highlight': isCard,
                         'card--horiz': isCard && isHorizontal,
                         'card--vert': isCard && !isHorizontal,
@@ -59,9 +60,9 @@ export default class GridItem extends React.Component {
                 >
                     <div
                         className={classNames({
-                            'grid': isHorizontal,
+                            grid: isHorizontal,
                             'grid-gap-none': isHorizontal,
-                            'flex': !isHorizontal,
+                            flex: !isHorizontal,
                             'flex-column': !isHorizontal
                         })}
                     >
@@ -78,7 +79,7 @@ export default class GridItem extends React.Component {
                             >
                                 <div
                                     className={classNames('item__media', {
-                                        'card__media': isCard,
+                                        card__media: isCard,
                                         'card__media--fill': isCard && !hasImagePadding,
                                         'card__media--top': isCard && imagePosition === 'top',
                                         'card__media--bottom': isCard && imagePosition === 'bottom',
@@ -98,7 +99,7 @@ export default class GridItem extends React.Component {
                                             'mx-auto': imageAlignX === 'center',
                                             'ml-auto': imageAlignX === 'right'
                                         })}
-                                        data-sb-field-path=".image.url#@src"
+                                        {...fpath('.image.url#@src')}
                                     />
                                 </div>
                             </div>
@@ -130,17 +131,23 @@ export default class GridItem extends React.Component {
                                         'pr-md-3': isCard && image && !hasImagePadding && imagePosition === 'right'
                                     })}
                                 >
-                                    {title && (
-                                        sectionTitle ? <h3 className={titleClasses} data-sb-field-path=".title">{title}</h3>
-                                            : <h2 className={titleClasses} data-sb-field-path=".title">{title}</h2>
-                                    )}
+                                    {title &&
+                                        (sectionTitle ? (
+                                            <h3 className={titleClasses} {...fpath('.title')}>
+                                                {title}
+                                            </h3>
+                                        ) : (
+                                            <h2 className={titleClasses} {...fpath('.title')}>
+                                                {title}
+                                            </h2>
+                                        ))}
                                     {subtitle && (
                                         <p
                                             className={classNames('item__subtitle', {
                                                 'text-center': titleAlignX === 'center',
                                                 'text-right': titleAlignX === 'right'
                                             })}
-                                            data-sb-field-path=".subtitle"
+                                            {...fpath('.subtitle')}
                                         >
                                             {subtitle}
                                         </p>
@@ -151,7 +158,7 @@ export default class GridItem extends React.Component {
                                                 'text-center': contentAlignX === 'center',
                                                 'text-right': contentAlignX === 'right'
                                             })}
-                                            data-sb-field-path=".content"
+                                            {...fpath('.content')}
                                         >
                                             {markdownify(content)}
                                         </div>
@@ -163,7 +170,7 @@ export default class GridItem extends React.Component {
                                                 'justify-center': actionsAlignX === 'center',
                                                 'justify-end': actionsAlignX === 'right'
                                             })}
-                                            data-sb-field-path=".actions"
+                                            {...fpath('.actions')}
                                         >
                                             <SectionActions actions={actions} />
                                         </div>

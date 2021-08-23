@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -44,7 +45,7 @@ export default class HeroSection extends React.Component {
                     'pb-6': paddingBottom === 'medium' || paddingBottom === 'large',
                     'pb-md-7': paddingBottom === 'large'
                 })}
-                data-sb-field-path={this.props.annotationPrefix}
+                {...fpath(this.props.annotationPrefix)}
             >
                 {backgroundImage && <SectionBackground section={section} />}
                 <div
@@ -70,7 +71,7 @@ export default class HeroSection extends React.Component {
                                                 'mx-auto': alignX === 'center',
                                                 'ml-auto': alignX === 'right'
                                             })}
-                                            data-sb-field-path=".image.url#@src .image_alt#@alt"
+                                            {...fpath('.image.url#@src .image_alt#@alt')}
                                         />}
                             </div>
                         )}
@@ -86,16 +87,16 @@ export default class HeroSection extends React.Component {
                                     'text-right': alignX === 'right'
                                 })}
                             >
-                                {title && <h1 className="hero__title" data-sb-field-path=".title">{title}</h1>}
-                                {subtitle && <p className="hero__subtitle" data-sb-field-path=".subtitle">{subtitle}</p>}
-                                {content && <div className="hero__copy" data-sb-field-path=".content">{markdownify(content)}</div>}
+                                {title && <h1 className="hero__title" {...fpath('.title')}>{title}</h1>}
+                                {subtitle && <p className="hero__subtitle" {...fpath('.subtitle')}>{subtitle}</p>}
+                                {content && <div className="hero__copy" {...fpath('.content')}>{markdownify(content)}</div>}
                                 {!_.isEmpty(actions) && (
                                     <div
                                         className={classNames('hero__actions', 'btn-group', {
                                             'justify-center': alignX === 'center',
                                             'justify-end': alignX === 'right'
                                         })}
-                                        data-sb-field-path=".actions"
+                                        {...fpath('.actions')}
                                     >
                                         <SectionActions actions={actions} />
                                     </div>

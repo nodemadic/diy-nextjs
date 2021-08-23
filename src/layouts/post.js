@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment-strftime';
@@ -50,7 +51,7 @@ export default class Post extends React.Component {
                                         'mb-lg-0': imagePosition !== 'top'
                                     })}
                                 >
-                                    <img src={withPrefix(image)} alt={imageAlt} data-sb-field-path="image.url#@src" />
+                                    <img src={withPrefix(image)} alt={imageAlt} {...fpath('image.url#@src')} />
                                 </div>
                             )}
                             <header
@@ -67,16 +68,16 @@ export default class Post extends React.Component {
                                             <span className="post__meta-sep"> &middot; </span>
                                         </React.Fragment>
                                     )}
-                                    <span className="post__date"><time dateTime={dateTimeAttr} data-sb-field-path="date">{formattedDate}</time></span>
+                                    <span className="post__date"><time dateTime={dateTimeAttr} {...fpath('date')}>{formattedDate}</time></span>
                                 </div>
-                                <h1 className="post__title mt-0" data-sb-field-path="title">{title}</h1>
-                                {subtitle && <p className="post__subtitle" data-sb-field-path="subtitle">{subtitle}</p>}
+                                <h1 className="post__title mt-0" {...fpath('title')}>{title}</h1>
+                                {subtitle && <p className="post__subtitle" {...fpath('subtitle')}>{subtitle}</p>}
                                 {author && <BlogPostAuthor author={author} data={data} containerClass={'post__byline'} avatarSize={'medium'} annotationPrefix="author" />}
                             </header>
                         </div>
                     </div>
                     <div className="container container--medium">
-                        {markdownContent && <div className="post__body text-block" data-sb-field-path="markdown_content">{markdownify(markdownContent)}</div>}
+                        {markdownContent && <div className="post__body text-block" {...fpath('markdown_content')}>{markdownify(markdownContent)}</div>}
                         {!_.isEmpty(tags) && (
                             <footer className="post__footer mt-4 mt-md-5">
                                 <BlogPostTags tags={tags} data={data} annotationPrefix="tags"/>

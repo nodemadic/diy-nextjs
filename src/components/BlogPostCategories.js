@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -12,17 +13,19 @@ export default class BlogPostCategories extends React.Component {
         if (category.link) {
             return (
                 <React.Fragment key={index}>
-                    <Link href={withPrefix(category.link)} data-sb-field-path={`.${index}.title`}>{category.title}</Link>
+                    <Link href={withPrefix(category.link)} {...fpath(`.${index}.title`)}>
+                        {category.title}
+                    </Link>
                     {index < categoryLength - 1 && ', '}
                 </React.Fragment>
             );
         } else {
             return (
                 <React.Fragment key={index}>
-                    <span data-sb-field-path={`.${index}.title`}>{category.title}</span>
+                    <span {...fpath(`.${index}.title`)}>{category.title}</span>
                     {index < categoryLength - 1 && ', '}
                 </React.Fragment>
-            )
+            );
         }
     }
 
@@ -35,8 +38,8 @@ export default class BlogPostCategories extends React.Component {
         const annotationPrefix = _.get(this.props, 'annotationPrefix', '');
 
         return (
-            <span className={containerClass} data-sb-field-path={annotationPrefix}>
-                {_.map(categories, (categoryRef, index) =>this.renderCategory(categoryRef, categoryLength, index, data))}
+            <span className={containerClass} {...fpath(annotationPrefix)}>
+                {_.map(categories, (categoryRef, index) => this.renderCategory(categoryRef, categoryLength, index, data))}
             </span>
         );
     }

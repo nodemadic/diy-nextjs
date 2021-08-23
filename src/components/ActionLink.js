@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -15,11 +16,15 @@ export default class ActionLink extends React.Component {
             attrs.target = '_blank';
         }
         if (newWindow || noFollow) {
-            attrs.rel = [(newWindow ? 'noopener' : ''), (noFollow ? 'nofollow' : '')].filter(Boolean).join(' ');
+            attrs.rel = [newWindow ? 'noopener' : '', noFollow ? 'nofollow' : ''].filter(Boolean).join(' ');
         }
 
         const annotationPrefix = _.get(this.props, 'annotationPrefix', '');
 
-        return <Link href={withPrefix(url)} {...attrs} data-sb-field-path={`${annotationPrefix}.label ${annotationPrefix}.url#@href`}>{label}</Link>;
+        return (
+            <Link href={withPrefix(url)} {...attrs} {...fpath(`${annotationPrefix}.label ${annotationPrefix}.url#@href`)}>
+                {label}
+            </Link>
+        );
     }
 }

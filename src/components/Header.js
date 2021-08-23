@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import Router from 'next/router';
 import _ from 'lodash';
@@ -42,7 +43,7 @@ export default class Header extends React.Component {
 
     renderNavLinks(navLinks, pageUrl, navKey) {
         return (
-            <ul className="menu flex-md items-md-center" data-sb-field-path={`.${navKey}_nav_links`}>
+            <ul className="menu flex-md items-md-center" {...fpath(`.${navKey}_nav_links`)}>
                 {_.map(navLinks, (action, index) => {
                     const actionUrl = _.trim(_.get(action, 'url'), '/');
                     const actionStyle = _.get(action, 'style', 'link');
@@ -53,14 +54,14 @@ export default class Header extends React.Component {
                                 'is-active': pageUrl === actionUrl && actionStyle === 'link',
                                 'menu__item-btn': actionStyle !== 'link'
                             })}
-                            data-sb-field-path={`.${index}`}
+                            {...fpath(`.${index}`)}
                         >
                             <Action action={action} />
                         </li>
-                    )
+                    );
                 })}
             </ul>
-        )
+        );
     }
 
     render() {
@@ -77,36 +78,56 @@ export default class Header extends React.Component {
         const secondaryNavLinks = _.get(header, 'secondary_nav_links');
 
         return (
-            <header className="site-header py-2" data-sb-field-path={`${config.__metadata.id}:header`}>
+            <header className="site-header py-2" {...fpath(`${config.__metadata.id}:header`)}>
                 <div className="container">
                     <nav className="navbar flex items-center" aria-label="Main Navigation">
-                        <Link className="sr-only" href="#content">Skip to main content</Link>
+                        <Link className="sr-only" href="#content">
+                            Skip to main content
+                        </Link>
                         <div className="navbar__branding mr-2">
-                            {logo ? <Link className="navbar__logo m-0" href={withPrefix('/')}><img src={withPrefix(logo)} alt={logoAlt} data-sb-field-path=".logo_alt#@alt .logo.url#@src"/></Link>
-                                : <Link className="navbar__title h4 m-0" href={withPrefix('/')} data-sb-field-path=".title">{title}</Link>}
+                            {logo ? (
+                                <Link className="navbar__logo m-0" href={withPrefix('/')}>
+                                    <img src={withPrefix(logo)} alt={logoAlt} {...fpath('.logo_alt#@alt .logo.url#@src')} />
+                                </Link>
+                            ) : (
+                                <Link className="navbar__title h4 m-0" href={withPrefix('/')} {...fpath('.title')}>
+                                    {title}
+                                </Link>
+                            )}
                         </div>
                         {((hasPrimaryNav && !_.isEmpty(primaryNavLinks)) || (hasSecondaryNav && !_.isEmpty(secondaryNavLinks))) && (
                             <React.Fragment>
                                 <div className="navbar__container flex-md-auto">
                                     <div className="navbar__scroller">
                                         <div className="navbar__inner">
-                                            <button aria-label="Close" className="btn btn--icon btn--clear navbar__close-btn" onClick={this.handleMenuToggle.bind(this)}>
+                                            <button
+                                                aria-label="Close"
+                                                className="btn btn--icon btn--clear navbar__close-btn"
+                                                onClick={this.handleMenuToggle.bind(this)}
+                                            >
                                                 <Icon icon={'close'} />
                                                 <span className="sr-only">Close</span>
                                             </button>
                                             <div className="navbar__menu flex-md">
                                                 {hasPrimaryNav && !_.isEmpty(primaryNavLinks) && this.renderNavLinks(primaryNavLinks, pageUrl, 'primary')}
-                                                {hasSecondaryNav && !_.isEmpty(secondaryNavLinks) && this.renderNavLinks(secondaryNavLinks, pageUrl, 'secondary')}
+                                                {hasSecondaryNav &&
+                                                    !_.isEmpty(secondaryNavLinks) &&
+                                                    this.renderNavLinks(secondaryNavLinks, pageUrl, 'secondary')}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button aria-label="Menu" className="btn btn--icon btn--clear navbar__menu-btn ml-auto" ref={this.menuOpenRef} onClick={this.handleMenuToggle.bind(this)}>
+                                <button
+                                    aria-label="Menu"
+                                    className="btn btn--icon btn--clear navbar__menu-btn ml-auto"
+                                    ref={this.menuOpenRef}
+                                    onClick={this.handleMenuToggle.bind(this)}
+                                >
                                     <Icon icon={'menu'} />
                                     <span className="sr-only">Menu</span>
                                 </button>
-                            </React.Fragment>)
-                        }
+                            </React.Fragment>
+                        )}
                     </nav>
                 </div>
             </header>

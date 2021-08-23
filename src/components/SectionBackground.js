@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -22,7 +23,7 @@ export default class SectionBackground extends React.Component {
                     backgroundPosition: backgroundImagePosition,
                     backgroundRepeat: backgroundImageRepeat
                 }}
-                data-sb-field-path=".background_image#@style .background_image_opacity#@style .background_image_size#@style .background_image_position#@style .background_image_repeat#@style"
+                {...fpath('.background_image#@style .background_image_opacity#@style .background_image_size#@style .background_image_position#@style .background_image_repeat#@style')}
             />
         );
     }

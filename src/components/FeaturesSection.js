@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -33,7 +34,7 @@ export default class FeaturesSection extends React.Component {
                     'py-1': paddingY !== 'small',
                     'py-sm-3': paddingY === 'large'
                 })}
-                data-sb-field-path={`.${index}`}
+                {...fpath(`.${index}`)}
             >
                 <div className="item__content grid items-center">
                     {hasMedia && (
@@ -44,18 +45,21 @@ export default class FeaturesSection extends React.Component {
                                 'cell-md-6': isHorizontal && mediaWidth === 'fifty',
                                 'cell-md-7': isHorizontal && mediaWidth === 'sixty'
                             })}
-                            {...(videoEmbed ? {'data-sb-field-path': '.video_embed_html#.'} : {})}
+                            {...(videoEmbed ? { 'data-sb-field-path': '.video_embed_html#.' } : {})}
                         >
-                            {videoEmbed ? htmlToReact(videoEmbed)
-                                : <img
+                            {videoEmbed ? (
+                                htmlToReact(videoEmbed)
+                            ) : (
+                                <img
                                     src={withPrefix(image)}
                                     alt={imageAlt}
                                     className={classNames({
                                         'mx-auto': alignX === 'center',
                                         'ml-auto': alignX === 'right'
                                     })}
-                                    data-sb-field-path=".image.url#@src .image_alt#@alt"
-                                />}
+                                    {...fpath('.image.url#@src .image_alt#@alt')}
+                                />
+                            )}
                         </div>
                     )}
                     {hasText && (
@@ -71,19 +75,33 @@ export default class FeaturesSection extends React.Component {
                                 'text-right': alignX === 'right'
                             })}
                         >
-                            {title && (
-                                sectionTitle ? <h3 className="feature__title h2" data-sb-field-path=".title">{title}</h3>
-                                    : <h2 className="feature__title h2" data-sb-field-path=".title">{title}</h2>
+                            {title &&
+                                (sectionTitle ? (
+                                    <h3 className="feature__title h2" {...fpath('.title')}>
+                                        {title}
+                                    </h3>
+                                ) : (
+                                    <h2 className="feature__title h2" {...fpath('.title')}>
+                                        {title}
+                                    </h2>
+                                ))}
+                            {subtitle && (
+                                <p className="feature__subtitle" {...fpath('.subtitle')}>
+                                    {subtitle}
+                                </p>
                             )}
-                            {subtitle && <p className="feature__subtitle" data-sb-field-path=".subtitle">{subtitle}</p>}
-                            {content && <div className="feature__copy" data-sb-field-path=".content">{markdownify(content)}</div>}
+                            {content && (
+                                <div className="feature__copy" {...fpath('.content')}>
+                                    {markdownify(content)}
+                                </div>
+                            )}
                             {!_.isEmpty(actions) && (
                                 <div
                                     className={classNames('feature__actions', 'btn-group', {
                                         'justify-center': alignX === 'center',
                                         'justify-end': alignX === 'right'
                                     })}
-                                    data-sb-field-path=".actions"
+                                    {...fpath('.actions')}
                                 >
                                     <SectionActions actions={actions} />
                                 </div>
@@ -125,7 +143,7 @@ export default class FeaturesSection extends React.Component {
                     'pb-6': paddingBottom === 'medium' || paddingBottom === 'large',
                     'pb-md-7': paddingBottom === 'large'
                 })}
-                data-sb-field-path={this.props.annotationPrefix}
+                {...fpath(this.props.annotationPrefix)}
             >
                 {backgroundImage && <SectionBackground section={section} />}
                 {(title || subtitle) && (
@@ -137,12 +155,20 @@ export default class FeaturesSection extends React.Component {
                             'text-right': alignX === 'right'
                         })}
                     >
-                        {subtitle && <div className="section__subtitle" data-sb-field-path=".subtitle">{subtitle}</div>}
-                        {title && <h2 className="section__title mt-0" data-sb-field-path=".title">{title}</h2>}
+                        {subtitle && (
+                            <div className="section__subtitle" {...fpath('.subtitle')}>
+                                {subtitle}
+                            </div>
+                        )}
+                        {title && (
+                            <h2 className="section__title mt-0" {...fpath('.title')}>
+                                {title}
+                            </h2>
+                        )}
                     </div>
                 )}
                 {!_.isEmpty(features) && (
-                    <div className="container" data-sb-field-path=".features">
+                    <div className="container" {...fpath('.features')}>
                         {_.map(features, (feature, index) => this.renderFeature(feature, index, section))}
                     </div>
                 )}

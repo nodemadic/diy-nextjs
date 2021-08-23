@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -14,7 +15,7 @@ export default class Advanced extends React.Component {
         const pageUrl = getPageUrl(page);
 
         return (
-            <Layout page={page} config={config} data-sb-field-path="sections">
+            <Layout page={page} config={config} {...fpath('sections')}>
                 {_.map(sections, (section, index) => {
                     const sectionType = _.get(section, 'type');
                     const component = _.upperFirst(_.camelCase(sectionType));

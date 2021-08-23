@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 import moment from 'moment-strftime';
@@ -86,11 +87,11 @@ export default class BlogFeedSection extends React.Component {
                 className={classNames('cell-12', 'cell-md-6', 'my-2', {
                     'cell-lg-4': sectionColumns === 'three'
                 })}
-                data-sb-object-id={post.__metadata.id}
+                {...oid(post.__metadata.id)}
             >
                 <div
                     className={classNames('item', {
-                        'card': isCard,
+                        card: isCard,
                         'card--highlight': isCard,
                         'card--vert': isCard
                     })}
@@ -99,12 +100,14 @@ export default class BlogFeedSection extends React.Component {
                         {image && showImage && (
                             <div
                                 className={classNames('item__media', 'mb-3', {
-                                    'card__media': isCard,
+                                    card__media: isCard,
                                     'card__media--fill': isCard,
                                     'card__media--top': isCard
                                 })}
                             >
-                                <Link href={postUrl}><img src={withPrefix(image)} alt={imageAlt} data-sb-field-path="thumb_image.url#@src"/></Link>
+                                <Link href={postUrl}>
+                                    <img src={withPrefix(image)} alt={imageAlt} {...fpath('thumb_image.url#@src')} />
+                                </Link>
                             </div>
                         )}
                         <div
@@ -121,33 +124,52 @@ export default class BlogFeedSection extends React.Component {
                                 <div className="item__meta mb-1">
                                     {!_.isEmpty(categories) && showCategories && (
                                         <React.Fragment>
-                                            <BlogPostCategories categories={categories} data={data} containerClass={'item__cat'} annotationPrefix="categories" />
+                                            <BlogPostCategories
+                                                categories={categories}
+                                                data={data}
+                                                containerClass={'item__cat'}
+                                                annotationPrefix="categories"
+                                            />
                                             {showDate && <span className="item__meta-sep"> &middot; </span>}
                                         </React.Fragment>
                                     )}
-                                    {showDate && <span className="item__date"><time dateTime={dateTimeAttr} data-sb-field-path="date">{formattedDate}</time></span>}
+                                    {showDate && (
+                                        <span className="item__date">
+                                            <time dateTime={dateTimeAttr} {...fpath('date')}>
+                                                {formattedDate}
+                                            </time>
+                                        </span>
+                                    )}
                                 </div>
                             )}
                             {sectionTitle ? (
                                 <h3
                                     className={classNames('item__title', 'mt-0', {
-                                        'h3': sectionColumns === 'two',
-                                        'h4': sectionColumns === 'three'
+                                        h3: sectionColumns === 'two',
+                                        h4: sectionColumns === 'three'
                                     })}
                                 >
-                                    <Link href={postUrl} data-sb-field-path="title">{title}</Link>
+                                    <Link href={postUrl} {...fpath('title')}>
+                                        {title}
+                                    </Link>
                                 </h3>
                             ) : (
                                 <h2
                                     className={classNames('item__title', 'mt-0', {
-                                        'h3': sectionColumns === 'two',
-                                        'h4': sectionColumns === 'three'
+                                        h3: sectionColumns === 'two',
+                                        h4: sectionColumns === 'three'
                                     })}
                                 >
-                                    <Link href={postUrl} data-sb-field-path="title">{title}</Link>
+                                    <Link href={postUrl} {...fpath('title')}>
+                                        {title}
+                                    </Link>
                                 </h2>
                             )}
-                            {excerpt && showExcerpt && <div className="item__copy"><p data-sb-field-path="excerpt">{excerpt}</p></div>}
+                            {excerpt && showExcerpt && (
+                                <div className="item__copy">
+                                    <p {...fpath('excerpt')}>{excerpt}</p>
+                                </div>
+                            )}
                             {author && showAuthor && (
                                 <BlogPostAuthor author={author} data={data} containerClass={'item__byline'} avatarSize={'small'} annotationPrefix="author" />
                             )}
@@ -194,7 +216,7 @@ export default class BlogFeedSection extends React.Component {
                     'pb-6': paddingBottom === 'medium' || paddingBottom === 'large',
                     'pb-md-7': paddingBottom === 'large'
                 })}
-                data-sb-field-path={this.props.annotationPrefix}
+                {...fpath(this.props.annotationPrefix)}
             >
                 {backgroundImage && <SectionBackground section={section} />}
                 {(title || subtitle) && (
@@ -204,8 +226,16 @@ export default class BlogFeedSection extends React.Component {
                             'text-right': alignX === 'right'
                         })}
                     >
-                        {subtitle && <div className="section__subtitle" data-sb-field-path=".subtitle">{subtitle}</div>}
-                        {title && <h2 className="section__title mt-0" data-sb-field-path=".title">{title}</h2>}
+                        {subtitle && (
+                            <div className="section__subtitle" {...fpath('.subtitle')}>
+                                {subtitle}
+                            </div>
+                        )}
+                        {title && (
+                            <h2 className="section__title mt-0" {...fpath('.title')}>
+                                {title}
+                            </h2>
+                        )}
                     </div>
                 )}
                 <div className="container">
@@ -222,7 +252,7 @@ export default class BlogFeedSection extends React.Component {
                                 'justify-center': alignX === 'center',
                                 'justify-end': alignX === 'right'
                             })}
-                            data-sb-field-path=".actions"
+                            {...fpath('.actions')}
                         >
                             <SectionActions actions={actions} />
                         </div>

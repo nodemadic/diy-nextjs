@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -53,7 +54,7 @@ export default class FormSection extends React.Component {
                     'pb-6': paddingBottom === 'medium' || paddingBottom === 'large',
                     'pb-md-7': paddingBottom === 'large'
                 })}
-                data-sb-field-path={annotationPrefix}
+                {...fpath(annotationPrefix)}
             >
                 {backgroundImage && <SectionBackground section={section} />}
                 {(title || subtitle) && (
@@ -63,8 +64,16 @@ export default class FormSection extends React.Component {
                             'text-right': titleAlignX === 'right'
                         })}
                     >
-                        {subtitle && <div className="section__subtitle" data-sb-field-path=".subtitle">{subtitle}</div>}
-                        {title && <h2 className="section__title mt-0" data-sb-field-path=".title">{title}</h2>}
+                        {subtitle && (
+                            <div className="section__subtitle" {...fpath('.subtitle')}>
+                                {subtitle}
+                            </div>
+                        )}
+                        {title && (
+                            <h2 className="section__title mt-0" {...fpath('.title')}>
+                                {title}
+                            </h2>
+                        )}
                     </div>
                 )}
                 <div
@@ -87,7 +96,7 @@ export default class FormSection extends React.Component {
                                     'text-center': contentAlignX === 'center',
                                     'text-right': contentAlignX === 'right'
                                 })}
-                                data-sb-field-path=".content"
+                                {...fpath('.content')}
                             >
                                 {markdownify(content)}
                             </div>
@@ -103,44 +112,46 @@ export default class FormSection extends React.Component {
                             <form
                                 name={formId}
                                 id={formId}
-                                {...(formAction ? ({ action: formAction }) : null)}
+                                {...(formAction ? { action: formAction } : null)}
                                 method="POST"
                                 data-netlify="true"
                                 data-netlify-honeypot={formHoneypotName}
                                 className={classNames({
                                     'form-inline': formLayout === 'inline',
-                                    'card': isCard,
+                                    card: isCard,
                                     'p-4': isCard,
                                     'p-sm-5': isCard
                                 })}
-                                data-sb-field-path=".form_id#@name .form_layout#@class .enable_card#@class"
+                                {...fpath('.form_id#@name .form_layout#@class .enable_card#@class')}
                             >
                                 <div className="sr-only">
-                                    <label id={formHoneypotLabelId} htmlFor={formHoneypotInputId}>Don't fill this out if you're human:</label>
+                                    <label id={formHoneypotLabelId} htmlFor={formHoneypotInputId}>
+                                        Don't fill this out if you're human:
+                                    </label>
                                     <input aria-labelledby={formHoneypotLabelId} id={formHoneypotInputId} name={formHoneypotName} />
                                 </div>
                                 <input type="hidden" name="form-name" value={formId} />
                                 <div
                                     className={classNames('form-content', {
-                                        'flex': formLayout === 'inline',
+                                        flex: formLayout === 'inline',
                                         'flex-column': formLayout === 'inline',
                                         'flex-xs-row': formLayout === 'inline'
                                     })}
-                                    data-sb-field-path=".form_fields"
+                                    {...fpath('.form_fields')}
                                 >
                                     {_.map(formFields, (field, index) => (
-                                            <div
-                                                key={index}
-                                                className={classNames('form-group', {
-                                                    'mb-2': formLayout === 'stacked',
-                                                    'mb-1': formLayout === 'inline',
-                                                    'mb-xs-0': formLayout === 'inline',
-                                                    'flex-auto': formLayout === 'inline'
-                                                })}
-                                                data-sb-field-path={`.${index} .${index}.input_type .${index}.is_required`}
-                                            >
-                                                <FormField field={field} />
-                                            </div>
+                                        <div
+                                            key={index}
+                                            className={classNames('form-group', {
+                                                'mb-2': formLayout === 'stacked',
+                                                'mb-1': formLayout === 'inline',
+                                                'mb-xs-0': formLayout === 'inline',
+                                                'flex-auto': formLayout === 'inline'
+                                            })}
+                                            {...fpath(`.${index} .${index}.input_type .${index}.is_required`)}
+                                        >
+                                            <FormField field={field} />
+                                        </div>
                                     ))}
                                     <div
                                         className={classNames('form-submit', {
@@ -150,7 +161,9 @@ export default class FormSection extends React.Component {
                                             'ml-xs-1': formLayout === 'inline'
                                         })}
                                     >
-                                        <button type="submit" className="btn btn--primary" data-sb-field-path={`${annotationPrefix}.submit_label`}>{submitLabel}</button>
+                                        <button type="submit" className="btn btn--primary" {...fpath(`${annotationPrefix}.submit_label`)}>
+                                            {submitLabel}
+                                        </button>
                                     </div>
                                 </div>
                             </form>

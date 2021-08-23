@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import _ from 'lodash';
@@ -102,7 +103,7 @@ export default class Body extends React.Component {
                     {favicon && <link rel="icon" href={withPrefix(favicon)} />}
                     <body className={classNames(`layout-${layoutType}`, `style-${style}`, `palette-${palette}`, `mode-${mode}`, `font-${font}`)} />
                 </Helmet>
-                <div id="site-wrap" className="site" data-sb-object-id={page.__metadata.id}>
+                <div id="site-wrap" className="site" {...oid(page.__metadata.id)}>
                     {hasAnncmnt && anncmntContent && <Announcement page={page} anncmnt={anncmnt} annotationPrefix={`${config.__metadata.id}:announcement`}/>}
                     <Header page={page} config={config} />
                     <main id="content" className="site-content" {...annotationProps}>

@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -39,7 +40,7 @@ export default class GridSection extends React.Component {
                     'pb-6': paddingBottom === 'medium' || paddingBottom === 'large',
                     'pb-md-7': paddingBottom === 'large'
                 })}
-                data-sb-field-path={this.props.annotationPrefix}
+                {...fpath(this.props.annotationPrefix)}
             >
                 {backgroundImage && <SectionBackground section={section} />}
                 {(title || subtitle) && (
@@ -51,12 +52,12 @@ export default class GridSection extends React.Component {
                             'text-right': alignX === 'right'
                         })}
                     >
-                        {subtitle && <div className="section__subtitle" data-sb-field-path=".subtitle">{subtitle}</div>}
-                        {title && <h2 className="section__title mt-0" data-sb-field-path=".title">{title}</h2>}
+                        {subtitle && <div className="section__subtitle" {...fpath('.subtitle')}>{subtitle}</div>}
+                        {title && <h2 className="section__title mt-0" {...fpath('.title')}>{title}</h2>}
                     </div>
                 )}
                 {!_.isEmpty(gridItems) && (
-                    <div className="container" data-sb-field-path=".grid_items">
+                    <div className="container" {...fpath('.grid_items')}>
                         <div
                             className={classNames('grid', {
                                 'grid-gap-small': gridGapX === 'small',
@@ -81,7 +82,7 @@ export default class GridSection extends React.Component {
                                 'justify-center': alignX === 'center',
                                 'justify-end': alignX === 'right'
                             })}
-                            data-sb-field-path=".actions"
+                            {...fpath('.actions')}
                         >
                             <SectionActions actions={actions} />
                         </div>

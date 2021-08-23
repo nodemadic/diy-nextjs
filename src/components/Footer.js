@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -10,16 +11,20 @@ export default class Footer extends React.Component {
     renderNav(navLinks, navTitle, navKey) {
         return (
             <div className="site-footer__menu cell-12 cell-md my-3 my-md-4">
-                {navTitle && <h2 className="h4 mb-3 mb-md-4" data-sb-field-path={`.${navKey}_nav_title`}>{navTitle}</h2>}
-                <ul className="menu" data-sb-field-path={`.${navKey}_nav_links`}>
+                {navTitle && (
+                    <h2 className="h4 mb-3 mb-md-4" {...fpath(`.${navKey}_nav_title`)}>
+                        {navTitle}
+                    </h2>
+                )}
+                <ul className="menu" {...fpath(`.${navKey}_nav_links`)}>
                     {_.map(navLinks, (action, index) => (
-                        <li key={index} className="menu__item mb-1" data-sb-field-path={`.${index}`}>
+                        <li key={index} className="menu__item mb-1" {...fpath(`.${index}`)}>
                             <Action action={action} />
                         </li>
                     ))}
                 </ul>
             </div>
-        )
+        );
     }
 
     render() {
@@ -42,8 +47,11 @@ export default class Footer extends React.Component {
         const links = _.get(footer, 'links');
 
         return (
-            <footer className="site-footer" data-sb-field-path={`${config.__metadata.id}:footer`}>
-                {(logo || (hasPrimaryNav && !_.isEmpty(primaryNavLinks)) || (hasSecondaryNav && !_.isEmpty(secondaryNavLinks)) || (hasTertiaryNav && !_.isEmpty(tertiaryNavLinks))) && (
+            <footer className="site-footer" {...fpath(`${config.__metadata.id}:footer`)}>
+                {(logo ||
+                    (hasPrimaryNav && !_.isEmpty(primaryNavLinks)) ||
+                    (hasSecondaryNav && !_.isEmpty(secondaryNavLinks)) ||
+                    (hasTertiaryNav && !_.isEmpty(tertiaryNavLinks))) && (
                     <div className="site-footer__nav py-5 py-md-6">
                         <div className="container">
                             <div
@@ -51,7 +59,11 @@ export default class Footer extends React.Component {
                                     'justify-md-center': logo
                                 })}
                             >
-                                {logo && <Link className="site-footer__logo cell-12 cell-md-5 my-4" href={withPrefix('/')}><img src={withPrefix(logo)} alt={logoAlt} data-sb-field-path=".logo.url#@src" /></Link>}
+                                {logo && (
+                                    <Link className="site-footer__logo cell-12 cell-md-5 my-4" href={withPrefix('/')}>
+                                        <img src={withPrefix(logo)} alt={logoAlt} {...fpath('.logo.url#@src')} />
+                                    </Link>
+                                )}
                                 {hasPrimaryNav && !_.isEmpty(primaryNavLinks) && this.renderNav(primaryNavLinks, primaryNavTitle, 'primary')}
                                 {hasSecondaryNav && !_.isEmpty(secondaryNavLinks) && this.renderNav(secondaryNavLinks, secondaryNavTitle, 'secondary')}
                                 {hasTertiaryNav && !_.isEmpty(tertiaryNavLinks) && this.renderNav(tertiaryNavLinks, tertiaryNavTitle, 'tertiary')}
@@ -69,7 +81,7 @@ export default class Footer extends React.Component {
                                             'cell-sm': hasSocial && !_.isEmpty(socialLinks)
                                         })}
                                     >
-                                        {copyright && <span data-sb-field-path=".content">{htmlToReact(copyright)}</span>}
+                                        {copyright && <span {...fpath('.content')}>{htmlToReact(copyright)}</span>}
                                         {_.map(links, (action, index) => (
                                             <ActionLink key={index} action={action} annotationPrefix={`${config.__metadata.id}:footer.links.${index}`} />
                                         ))}
@@ -80,7 +92,7 @@ export default class Footer extends React.Component {
                                         className={classNames('site-footer__social', 'cell-12', {
                                             'cell-sm-auto': copyright || !_.isEmpty(links)
                                         })}
-                                        data-sb-field-path=".social_links .has_social"
+                                        {...fpath('.social_links .has_social')}
                                     >
                                         {_.map(socialLinks, (action, index) => (
                                             <ActionIcon key={index} action={action} annotationPrefix={`${config.__metadata.id}:footer.social_links.${index}`} />

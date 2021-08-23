@@ -1,3 +1,4 @@
+import { oid, fpath } from '../utils/annotations';
 import React from 'react';
 import _ from 'lodash';
 
@@ -16,8 +17,8 @@ export default class Page extends React.Component {
             <Layout page={page} config={config}>
                 <article className="page py-5 py-sm-6">
                     <div className="container container--medium">
-                        {title && <header className="page__header"><h1 className="page__title" data-sb-field-path="title">{title}</h1></header>}
-                        {markdownContent && <div className="page__body text-block" data-sb-field-path="markdown_content">{markdownify(markdownContent)}</div>}
+                        {title && <header className="page__header"><h1 className="page__title" {...fpath('title')}>{title}</h1></header>}
+                        {markdownContent && <div className="page__body text-block" {...fpath('markdown_content')}>{markdownify(markdownContent)}</div>}
                     </div>
                 </article>
             </Layout>
