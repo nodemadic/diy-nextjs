@@ -75,7 +75,7 @@ If you need a hand, make sure to check the [Stackbit support page](https://stack
 
 1. Install dependencies
 
-       run npm install
+       npm install
        
 1. Start the Next.js local development server:
 
@@ -88,7 +88,7 @@ If you need a hand, make sure to check the [Stackbit support page](https://stack
 
 ## Building for production 🏗
 
-To build a static site for production, or test locally how it worls, run the
+To build a static site for production, or test locally how it works, run the
 following command:
 
     npm run build
