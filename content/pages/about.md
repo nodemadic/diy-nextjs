@@ -8,12 +8,13 @@ sections:
       background_color: secondary
     - type: features_section
       features:
-          - title: Section Title One
-            subtitle: 'Odio et tortor laoreet, sed interdum augue ornare. '
+          - title: I am Black
+            subtitle: 'I’ve even done it my whole life'
             content: >-
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl
-                ligula, cursus id molestie vel, maximus aliquet risus. Vivamus in nibh
-                fringilla, fringilla.
+                Some witty comment about the above statement. Elongated into a paragraph
+                format. Elongated into a paragraph format. Elongated into a paragraph
+                format. Elongated into a paragraph format. Elongated into a paragraph
+                format.
             image: images/about-5.jpg
             image_alt: People in conversation in the office lounge area
             media_position: right
@@ -110,10 +111,10 @@ sections:
       has_border: false
       background_color: none
     - type: cta_section
-      title: This is a Call to Action
-      content: Ut egestas elementum suscipit. Quisque at hendrerit mauris.
+      title: Let’s get judging
+      content:
       actions:
-          - label: Compare Plans
+          - label: Get started
             url: /pricing
             style: primary
       align: center

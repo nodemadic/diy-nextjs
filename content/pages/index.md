@@ -5,13 +5,12 @@ sections:
       title: This Is A Big Hero Headline
       subtitle: Optional hero section subtitle
       content: >-
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisl
-          ligula, cursus id molestie vel.
+          This is where we could change the text of the body
       actions:
-          - label: Personal
+          - label: Get Started
             url: /pricing
             style: primary
-          - label: Enterprise
+          - label: Learn More
             url: /features
             style: secondary
       image: images/classic/REPLACEME.png
