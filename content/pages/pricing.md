@@ -20,12 +20,12 @@ sections:
                 Free forever... mostly.
 
                 * $0 Cost to use my service as an individual
-                * Tag my service on IG or Twitter
+                * Must follow @nathaniel and provide your username
 
             content_align: left
             actions:
                 - label: Judge Me
-                  url: /features
+                  url: /personal_landing
                   style: primary
             actions_align: left
             actions_width: full-width
