@@ -2,10 +2,6 @@ import Action from './Action';
 import ActionIcon from './ActionIcon';
 import ActionLink from './ActionLink';
 import Announcement from './Announcement';
-import BlogFeedSection from './BlogFeedSection';
-import BlogPostAuthor from './BlogPostAuthor';
-import BlogPostCategories from './BlogPostCategories';
-import BlogPostTags from './BlogPostTags';
 import CtaSection from './CtaSection';
 import FeaturesSection from './FeaturesSection';
 import Footer from './Footer';
@@ -26,10 +22,6 @@ export {
     ActionIcon,
     ActionLink,
     Announcement,
-    BlogFeedSection,
-    BlogPostAuthor,
-    BlogPostCategories,
-    BlogPostTags,
     CtaSection,
     FeaturesSection,
     Footer,
@@ -51,10 +43,6 @@ export default {
     ActionIcon,
     ActionLink,
     Announcement,
-    BlogFeedSection,
-    BlogPostAuthor,
-    BlogPostCategories,
-    BlogPostTags,
     CtaSection,
     FeaturesSection,
     Footer,
